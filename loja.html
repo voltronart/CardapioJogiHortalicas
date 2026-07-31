@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hortaliças Jogi — Direto da horta pra sua mesa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="loja.css">
+<link rel="stylesheet" href="responsividade.css">
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Tela mostrada se o link ?cliente=slug não for válido -->
+  <div class="tela-invalida escondido" id="tela-invalida">
+    <div class="tela-invalida-box">
+      <h1>Esse link não é válido</h1>
+      <p>Pode ter expirado ou estar incompleto. Se você é um restaurante e quer fazer pedidos com a gente, fale com a Hortaliças Jogi:</p>
+      <a id="btn-whatsapp-contato" class="hero-cta" href="#" target="_blank" rel="noopener">
+        Falar no WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <div id="tela-loja" class="escondido">
+
+    <div class="intro" id="intro">
+      <div class="intro-mark">
+        <span>Hortaliças</span>
+        <strong>Jogi</strong>
+      </div>
+      <div class="intro-sub">colhendo confiança desde sempre</div>
+    </div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="#topo" class="logo">
+          <span class="logo-small">Hortaliças</span>
+          <span class="logo-big">Jogi</span>
+        </a>
+        <nav class="nav">
+          <span id="nome-restaurante" class="nav-cliente"></span>
+          <a href="#produtos">Produtos</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <button class="cart-btn" id="cartBtn" aria-label="Carrinho">
+          🧺 <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="topo">
+      <section class="hero">
+        <div class="hero-text">
+          <p class="hero-eyebrow">pedido para restaurantes · fresquinho todo dia</p>
+          <h1>O melhor da terra, <em>direto pro seu balcão.</em></h1>
+          <p class="hero-desc">Frutas, verduras e legumes selecionados na bancada, sem atravessador — entregues direto pro seu restaurante.</p>
+          <a href="#produtos" class="hero-cta">Ver produtos disponíveis ↓</a>
+        </div>
+        <div class="hero-stamp">
+          <div class="stamp">
+            <span>100%</span>
+            FRESCO
+          </div>
+        </div>
+      </section>
+
+      <section id="produtos" class="produtos-section">
+        <div class="section-head">
+          <h2>Produtos disponíveis</h2>
+        </div>
+        <div class="grid" id="grid-produtos">
+          <!-- cards inseridos via JS -->
+        </div>
+      </section>
+    </main>
+
+    <footer id="contato" class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-small">Hortaliças</span>
+          <span class="logo-big">Jogi</span>
+        </div>
+        <div class="footer-info">
+          <p>Planaltina-GO, GOIÁS — todos os dias, 6h às 18h</p>
+          <p>(61) 99643-3209 · contato@hortalicasjogi.com.br</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Carrinho lateral (drawer) -->
+    <div class="cart-drawer escondido" id="cartDrawer">
+      <div class="cart-drawer-box">
+        <div class="cart-drawer-header">
+          <h3>Seu carrinho</h3>
+          <button id="btn-fechar-carrinho" class="botao-icone">Fechar</button>
+        </div>
+
+        <div id="carrinho-lista" class="cart-drawer-lista">
+          <!-- itens inseridos via JS -->
+        </div>
+
+        <div class="cart-drawer-footer">
+          <div class="cart-drawer-total">
+            <span>Total</span>
+            <strong id="carrinho-total">R$ 0,00</strong>
+          </div>
+          <button id="btn-finalizar-pedido" class="hero-cta cart-drawer-finalizar">
+            Finalizar pedido
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-toast" id="cartToast"></div>
+
+  </div>
+
+  <script src="supabaseConfig.js"></script>
+  <script>
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  </script>
+  <script src="loja.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+/* ==========================================================
+   RESPONSIVIDADE.CSS
+   Ajustes de layout para telas pequenas, médias e grandes.
+   Cobre: dashboard (clientes, produtos, pedidos, financeiro)
+   e loja pública (vitrine + carrinho).
+
+   Como usar: incluir este arquivo POR ÚLTIMO no <head>,
+   depois de todos os outros CSS da página, assim ele pode
+   sobrescrever regras de layout sem precisar de !important.
+   ========================================================== */
+
+
+/* ==========================================================
+   1. BASE — evita estouro horizontal em qualquer tela
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  max-width: 100%;
+}
+
+
+/* ==========================================================
+   2. TELAS GRANDES (acima de 1400px)
+   Impede que o conteúdo fique esticado demais em monitores largos
+   ========================================================== */
+
+@media (min-width: 1400px) {
+  .conteudo,
+  .financeiro {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .produtos-section,
+  .hero,
+  .header-inner,
+  .footer-inner {
+    max-width: 1280px;
+  }
+}
+
+
+/* ==========================================================
+   3. TABLET (até 1024px)
+   Sidebar um pouco mais estreita, grids com menos colunas
+   ========================================================== */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .conteudo,
+  .financeiro {
+    padding: 24px 28px;
+  }
+
+  .grid,
+  .grid-produtos {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .cards-financeiro,
+  .cards-resumo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero {
+    gap: 24px;
+  }
+}
+
+
+/* ==========================================================
+   4. TABLET PEQUENO / MOBILE GRANDE (até 860px)
+   Sidebar vira barra superior, hero empilha, nav esconde
+   ========================================================== */
+
+@media (max-width: 860px) {
+
+  /* --- Dashboard: sidebar deitada no topo em vez de lateral --- */
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+    overflow-x: auto;
+  }
+
+  .sidebar-topo {
+    border-bottom: none;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding: 0 16px 0 0;
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-grow: 1;
+    overflow-x: auto;
+  }
+
+  .nav-link {
+    white-space: nowrap;
+    padding: 8px 14px;
+  }
+
+  .sidebar-rodape {
+    padding: 0;
+  }
+
+  .conteudo,
+  .financeiro {
+    padding: 20px;
+  }
+
+  .conteudo-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .conteudo-header .header-acoes,
+  .conteudo-header .filtros-header {
+    flex-wrap: wrap;
+  }
+
+  .cards-financeiro,
+  .cards-resumo {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* --- Loja: hero empilha, nav de texto some (fica só logo + carrinho) --- */
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 40px;
+  }
+
+  .hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-stamp {
+    order: -1;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .grid,
+  .grid-produtos {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+}
+
+
+/* ==========================================================
+   5. MOBILE (até 600px)
+   Tudo em coluna única, tabelas viram cards roláveis
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  /* --- Cards de resumo em coluna única --- */
+  .cards-financeiro,
+  .cards-resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .card-valor {
+    font-size: 1.4rem;
+  }
+
+  /* --- Tabelas: permite rolagem horizontal em vez de quebrar layout --- */
+  .tabela-padrao {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .tabela-padrao thead,
+  .tabela-padrao tbody,
+  .tabela-padrao tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  /* --- Modal ocupa quase a tela toda, sem margens grandes --- */
+  .modal-box {
+    width: 92vw;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  /* --- Botões de ação em coluna, mais fáceis de tocar --- */
+  .modal-acoes {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal-acoes button {
+    width: 100%;
+  }
+
+  /* --- Header de conteúdo --- */
+  .conteudo-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .conteudo-header .header-acoes,
+  .conteudo-header .filtros-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .conteudo-header select,
+  .conteudo-header input {
+    width: 100%;
+  }
+
+  /* --- Loja: hero e grid --- */
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+  }
+
+  .grid,
+  .grid-produtos {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .card-produto-nome {
+    font-size: 1rem;
+  }
+
+  .card-produto-acoes {
+    flex-direction: column;
+  }
+
+  .input-quantidade {
+    width: 100%;
+  }
+
+  /* --- Carrinho (drawer) ocupa tela cheia no mobile --- */
+  .cart-drawer-box {
+    width: 100%;
+  }
+
+  .carrinho-item {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    text-align: left;
+  }
+
+  .carrinho-item-qtd {
+    width: 70px;
+  }
+
+  /* --- Footer empilha --- */
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-info {
+    text-align: center;
+  }
+}
+
+
+/* ==========================================================
+   6. MOBILE PEQUENO (até 380px)
+   Telas muito estreitas (iPhone SE e similares)
+   ========================================================== */
+
+@media (max-width: 380px) {
+  .grid,
+  .grid-produtos {
+    grid-template-columns: 1fr;
+  }
+
+  .conteudo,
+  .financeiro {
+    padding: 14px;
+  }
+
+  .sidebar-topo h2 {
+    font-size: 0.95rem;
+  }
+
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .hero-stamp .stamp {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+
+/* ==========================================================
+   7. TELAS MUITO PEQUENAS EM ALTURA (paisagem em celular)
+   ========================================================== */
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .modal-box {
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+
+  .intro {
+    display: none; /* pula a splash screen, prioriza espaço útil */
+  }
+
+  .cart-drawer-box {
+    overflow-y: auto;
+  }
+}
+
+
+/* ==========================================================
+   8. RESPEITA PREFERÊNCIA DE MOVIMENTO REDUZIDO
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ==========================================================
+   9. TELAS DE ALTA DENSIDADE (retina) — ajuste fino de bordas
+   ========================================================== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .card,
+  .card-produto,
+  .modal-box {
+    border-width: 0.5px;
+  }
+}
